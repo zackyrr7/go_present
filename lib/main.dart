@@ -5,9 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_present/bloc/darkmode/theme_bloc.dart';
 import 'package:go_present/bloc/homePage/grid_bloc.dart';
+import 'package:go_present/bloc/homePage/list_bloc.dart';
+import 'package:go_present/bloc/homePage/list_event.dart';
 import 'package:go_present/bloc/homePage/user_bloc.dart';
 import 'package:go_present/bloc/homePage/user_event.dart';
 import 'package:go_present/bloc/loginPage/login_bloc.dart';
+import 'package:go_present/bloc/riwayat/riwayat_bloc.dart';
+import 'package:go_present/bloc/riwayat/riwayat_event.dart';
 import 'package:go_present/routes/routes.dart';
 import 'package:go_present/screens/login/login_page.dart';
 import 'package:go_present/screens/navbar/navbar.dart';
@@ -48,6 +52,8 @@ class _AppInitializerState extends State<AppInitializer> {
         BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => UserBloc(context)),
+        BlocProvider(create: (context) => ListBloc(context)),
+        BlocProvider(create: (context) => RiwayatBloc(context)),
       ],
       child: FutureBuilder<bool>(
         future: _tokenCheckFuture,
@@ -62,9 +68,14 @@ class _AppInitializerState extends State<AppInitializer> {
 
           final bool hasToken = snapshot.data ?? false;
 
+          DateTime now = DateTime.now();
+          int month = now.month;
+
           // Fetch user data sekali saja ketika ada token
           if (hasToken) {
+            context.read<RiwayatBloc>().add(FetchRiwayatProfile(bulan: month));
             context.read<UserBloc>().add(FetchUserProfile());
+            context.read<ListBloc>().add(FetchListProfile());
           }
 
           return BlocBuilder<ThemeBloc, ThemeData>(

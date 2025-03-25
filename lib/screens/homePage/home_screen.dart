@@ -75,7 +75,9 @@ class HomeScreen extends StatelessWidget {
               _buildUserProfile(context),
               const CardAbsen(),
               _buildGridMenu(context, gridItems),
-              const CardPresensi(),
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: const CardPresensi()),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_present/constant.dart';
 import 'package:go_present/model/home_user.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -25,7 +26,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
         // Kirim request ke API
         final response = await http.post(
-          Uri.parse("http://192.168.1.67:82/api2/api/home/today"),
+          Uri.parse("$url/home/today"),
           headers: {
             "Authorization": "Bearer $token",
             "Content-Type": "application/json",
@@ -53,7 +54,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           emit(UserError("Gagal menghubungi server"));
         }
       } catch (e) {
-        emit(UserError("Terjadi kesalahan: $e"));
+        Navigator.pushReplacementNamed(context, "/login");
       }
     });
   }

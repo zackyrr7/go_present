@@ -3,11 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_present/bloc/darkmode/theme_bloc.dart';
+import 'package:go_present/bloc/homePage/list_bloc.dart';
+import 'package:go_present/bloc/homePage/list_event.dart';
 import 'package:go_present/bloc/homePage/user_bloc.dart';
 import 'package:go_present/bloc/homePage/user_event.dart';
 import 'package:go_present/bloc/loginPage/login_bloc.dart';
 import 'package:go_present/bloc/loginPage/login_event.dart';
 import 'package:go_present/bloc/loginPage/login_state.dart';
+import 'package:go_present/bloc/riwayat/riwayat_bloc.dart';
+import 'package:go_present/bloc/riwayat/riwayat_event.dart';
 import 'package:go_present/screens/navbar/navbar.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -30,12 +34,16 @@ class _LoginscreenState extends State<Loginscreen> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    int month = now.month;
     return Scaffold(
       backgroundColor: Colors.blue,
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSucces) {
+            context.read<RiwayatBloc>().add(FetchRiwayatProfile(bulan: month));
             context.read<UserBloc>().add(FetchUserProfile());
+            context.read<ListBloc>().add(FetchListProfile());
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => WidgetNavbar()),
