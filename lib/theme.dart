@@ -12,8 +12,10 @@ class AppThemes {
       onSurface: Colors.black, // Warna teks di atas surface
     ),
     textTheme: TextTheme(
+      titleLarge: const TextStyle(color: Colors.white),
       bodySmall: TextStyle(color: Colors.blue[50]!),
       bodyMedium: const TextStyle(color: Colors.black),
+      bodyLarge: const TextStyle(color: Colors.black),
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.blue,
@@ -44,9 +46,10 @@ class AppThemes {
       onSurface: Colors.white, // Warna teks di atas surface
     ),
     textTheme: TextTheme(
-      bodySmall: TextStyle(color: Colors.blue[50]!),
-      bodyMedium: const TextStyle(color: Colors.white),
-    ),
+        titleLarge: const TextStyle(color: Colors.black),
+        bodySmall: TextStyle(color: Colors.blue[50]!),
+        bodyMedium: const TextStyle(color: Colors.white),
+        bodyLarge: const TextStyle(color: Colors.white)),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.black,
       titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),

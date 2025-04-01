@@ -5,6 +5,25 @@ class IzinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        // iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
+        title: Text(
+          "Izin Pegawai",
+        ),
+        centerTitle: true,
+        toolbarHeight: 40,
+      ),
+      body: Center(
+        child: Text("Izin Pegawai"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+      ),
+    );
   }
 }

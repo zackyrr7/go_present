@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_present/bloc/darkmode/theme_bloc.dart';
 import 'package:go_present/bloc/homePage/list_bloc.dart';
 import 'package:go_present/bloc/homePage/list_event.dart';
+import 'package:go_present/bloc/homePage/notification_bloc.dart';
+import 'package:go_present/bloc/homePage/notification_event.dart';
 import 'package:go_present/bloc/homePage/user_bloc.dart';
 import 'package:go_present/bloc/homePage/user_event.dart';
 import 'package:go_present/bloc/loginPage/login_bloc.dart';
@@ -36,6 +38,33 @@ class _LoginscreenState extends State<Loginscreen> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     int month = now.month;
+
+    if (ModalRoute.of(context)?.settings.name == '/login') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Sesi Telah Habis"),
+              content: const Text(
+                  "Token sesi Anda telah kedaluwarsa, silakan login kembali."),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    // Menutup dialog setelah pengguna menekan tombol OK
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "OK",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      });
+    }
     return Scaffold(
       backgroundColor: Colors.blue,
       body: BlocConsumer<LoginBloc, LoginState>(
@@ -44,6 +73,7 @@ class _LoginscreenState extends State<Loginscreen> {
             context.read<RiwayatBloc>().add(FetchRiwayatProfile(bulan: month));
             context.read<UserBloc>().add(FetchUserProfile());
             context.read<ListBloc>().add(FetchListProfile());
+            context.read<NotificationBloc>().add(FetchNotification());
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => WidgetNavbar()),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_present/screens/login/login_page.dart';
 import 'package:go_present/screens/homePage/amal_screen.dart';
 import 'package:go_present/screens/homePage/cuti_screen.dart';
 import 'package:go_present/screens/homePage/izin_screen.dart';
@@ -14,6 +15,7 @@ class AppRoutes {
   static const String amal = "/amal";
   static const String aktivitas = "/aktivitas";
   static const String slip = "/slip";
+  static const String login = "/login"; // Menambahkan route login
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -29,6 +31,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const AmalScreen());
       case slip:
         return MaterialPageRoute(builder: (_) => const SlipScreen());
+      case login: // Route untuk halaman login
+        return MaterialPageRoute(builder: (_) => const Loginscreen());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

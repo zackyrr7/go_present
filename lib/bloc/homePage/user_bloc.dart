@@ -2,21 +2,20 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_present/constant.dart';
 import 'package:go_present/model/home_user.dart';
+import 'package:go_present/utils/helpers.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:go_present/main.dart'; // Import untuk navigatorKey
 import 'user_event.dart';
 import 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final FlutterSecureStorage storage = const FlutterSecureStorage();
-  final BuildContext context; // Tambahkan context untuk navigasi
 
-  UserBloc(this.context) : super(UserInitial()) {
+  UserBloc() : super(UserInitial()) {
     on<FetchUserProfile>((event, emit) async {
       emit(UserLoading());
       try {
-        // Ambil token dari Flutter Secure Storage
         String? token = await storage.read(key: "token");
 
         if (token == null) {
@@ -24,7 +23,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           return;
         }
 
-        // Kirim request ke API
         final response = await http.post(
           Uri.parse("$url/home/today"),
           headers: {
@@ -45,16 +43,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         } else if (response.statusCode == 401) {
           await storage.delete(key: "token");
 
-          // Navigasi ke halaman login
-          // ignore: use_build_context_synchronously
-          Navigator.pushReplacementNamed(context, "/login");
+          // Navigasi ke halaman login dengan navigatorKey
+          // navigatorKey.currentState?.pushReplacementNamed("/login");
+          await AuthHelper.handleUnauthorized(
+              navigatorKey.currentContext, navigatorKey);
 
-          emit(UserError("Sesi habis, silakan login kembali"));
+          // emit(UserError("Sesi habis, silakan login kembali"));
         } else {
           emit(UserError("Gagal menghubungi server"));
         }
       } catch (e) {
-        Navigator.pushReplacementNamed(context, "/login");
+        navigatorKey.currentState?.pushReplacementNamed("/login");
       }
     });
   }

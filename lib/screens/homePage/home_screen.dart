@@ -4,10 +4,13 @@ import 'package:go_present/bloc/darkmode/theme_bloc.dart';
 import 'package:go_present/bloc/homePage/grid_bloc.dart';
 import 'package:go_present/bloc/homePage/grid_event.dart';
 import 'package:go_present/bloc/homePage/grid_state.dart';
+import 'package:go_present/bloc/homePage/notifaction_state.dart';
+import 'package:go_present/bloc/homePage/notification_bloc.dart';
 import 'package:go_present/bloc/homePage/user_bloc.dart';
 // import 'package:go_present/bloc/homePage/user_event.dart';
 import 'package:go_present/bloc/homePage/user_state.dart';
 import 'package:go_present/routes/routes.dart';
+import 'package:go_present/screens/homePage/notification_screen.dart';
 import 'package:go_present/widget/homePage/card_absen.dart';
 import 'package:go_present/widget/homePage/card_presensi.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -107,11 +110,36 @@ class HomeScreen extends StatelessWidget {
             );
           },
         ),
-        IconButton(
-          onPressed: () {
-            // Tambahkan logika notifikasi jika diperlukan
+        BlocBuilder<NotificationBloc, NotificationState>(
+          builder: (context, state) {
+            return Stack(children: [
+              IconButton(
+                onPressed: () {
+                  // Tambahkan logika notifikasi jika diperlukan
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationScreen()));
+                },
+                icon: const Icon(Icons.notifications_outlined,
+                    color: Colors.white),
+              ),
+              if (state.unreadCount > 0)
+                Positioned(
+                    right: 5,
+                    // top: 15,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
+                          color: Colors.red, shape: BoxShape.circle),
+                      child: Text(
+                        state.unreadCount.toString(),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                    ))
+            ]);
           },
-          icon: const Icon(Icons.notifications_outlined, color: Colors.white),
         ),
       ],
     );

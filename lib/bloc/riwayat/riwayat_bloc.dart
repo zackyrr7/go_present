@@ -1,17 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_present/bloc/riwayat/riwayat_event.dart';
 import 'package:go_present/bloc/riwayat/riwayat_state.dart';
 import 'package:go_present/constant.dart';
+import 'package:go_present/main.dart';
 import 'package:go_present/model/riwayat_list.dart';
+import 'package:go_present/routes/routes.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class RiwayatBloc extends Bloc<RiwayatEvent, RiwayatState> {
-  final FlutterSecureStorage storage = FlutterSecureStorage();
-  late DateTime now;
-  late int moth;
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
   final BuildContext context;
 
   RiwayatBloc(this.context) : super(RiwayatInitial()) {
@@ -37,8 +38,43 @@ class RiwayatBloc extends Bloc<RiwayatEvent, RiwayatState> {
         );
 
         print('Response Status Code: ${response.statusCode}');
-        print('Response Body: ${response.body}');
+        print('token: $token');
 
+        // Pengecekan status 401 Unauthorized
+        if (response.statusCode == 401) {
+          // Menghapus token
+          await storage.delete(key: "token");
+
+          // Menavigasi ke halaman login
+          if (navigatorKey.currentState != null) {
+            navigatorKey.currentState?.pushReplacementNamed(AppRoutes.login);
+          }
+
+          // Menampilkan dialog untuk memberi tahu sesi sudah habis
+          showDialog(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Sesi Telah Habis"),
+                content: const Text(
+                    "Token sesi Anda telah kedaluwarsa, silakan login kembali."),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      // Menutup dialog setelah pengguna menekan tombol OK
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+
+          return; // Menghentikan eksekusi lebih lanjut setelah 401
+        }
+
+        // Status 200 berarti berhasil
         if (response.statusCode == 200) {
           final data = json.decode(response.body);
           print('Data dari API: $data'); // Debugging tambahan
@@ -52,14 +88,11 @@ class RiwayatBloc extends Bloc<RiwayatEvent, RiwayatState> {
             print('Status dari API false');
             emit(RiwayatError(message: "Gagal memuat data"));
           }
-        } else if (response.statusCode == 401) {
-          await storage.delete(key: "token");
-          Navigator.pushReplacementNamed(context, "/login");
-          emit(RiwayatError(message: "Sesi habis, silahkan Login Kembali"));
         } else {
           emit(RiwayatError(message: "Gagal Menghubungi server"));
         }
       } catch (e) {
+        // Jika ada kesalahan lain (misalnya kesalahan jaringan)
         print('Error terjadi: $e');
         emit(RiwayatError(message: "Terjadi Kesalahan"));
       }

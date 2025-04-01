@@ -47,13 +47,13 @@ class CardPresensi extends StatelessWidget {
               BlocBuilder<ListBloc, ListState>(
                 builder: (context, state) {
                   if (state is ListLoading) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is ListLoaded) {
                     if (state.listAbsens.length == 0) {
                       return Container(
-                        child: Center(
+                        child: const Center(
                           child: Text("Belum ada yang absen"),
                         ),
                       );
@@ -85,7 +85,7 @@ class CardPresensi extends StatelessWidget {
                                         children: [
                                           Text(
                                             state.listAbsens[index].name,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.blueAccent,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -94,9 +94,8 @@ class CardPresensi extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 color: Colors.greenAccent[100]),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(5.0),
                                               child: Text(
                                                 'Izin',
                                                 style: TextStyle(fontSize: 10),
@@ -129,7 +128,7 @@ class CardPresensi extends StatelessWidget {
                                         children: [
                                           Text(
                                             state.listAbsens[index].name,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.blueAccent,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -138,9 +137,8 @@ class CardPresensi extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 color: Colors.red),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(5.0),
                                               child: Text(
                                                 'Sakit',
                                                 style: TextStyle(fontSize: 10),
@@ -171,7 +169,7 @@ class CardPresensi extends StatelessWidget {
                                     children: [
                                       Text(
                                         state.listAbsens[index].name,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.blueAccent,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -179,15 +177,16 @@ class CardPresensi extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Absen Masuk',
                                             style: TextStyle(fontSize: 10),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(5.0),
                                             child: Text(
                                               jamMasuk,
-                                              style: TextStyle(fontSize: 10),
+                                              style:
+                                                  const TextStyle(fontSize: 10),
                                             ),
                                           ),
                                         ],
@@ -196,15 +195,16 @@ class CardPresensi extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Absen Pulang',
                                             style: TextStyle(fontSize: 10),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(5.0),
                                             child: Text(
                                               jamKeluar,
-                                              style: TextStyle(fontSize: 10),
+                                              style:
+                                                  const TextStyle(fontSize: 10),
                                             ),
                                           ),
                                         ],
@@ -232,7 +232,7 @@ class CardPresensi extends StatelessWidget {
                     );
                   }
                   return Container(
-                    child: Text('error'),
+                    child: const Text('error'),
                   );
                 },
               ),

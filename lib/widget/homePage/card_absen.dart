@@ -51,7 +51,7 @@ class CardAbsen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
                       child: Text(
                         state.userProfile.tanggal,
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -61,14 +61,14 @@ class CardAbsen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.blue[50],
-                                borderRadius: BorderRadius.circular(10)),
-                            width: MediaQuery.of(context).size.width * 0.42,
-                            height: MediaQuery.of(context).size.height * 0.15,
+                                borderRadius: BorderRadius.circular(5)),
+                            width: MediaQuery.of(context).size.width * 0.40,
+                            height: MediaQuery.of(context).size.height * 0.17,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -82,7 +82,7 @@ class CardAbsen extends StatelessWidget {
                                   style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                                      fontSize: 20),
                                 ),
                                 const SizedBox(height: 2),
                                 Container(
@@ -94,7 +94,7 @@ class CardAbsen extends StatelessWidget {
                                     child: Text(
                                       status1,
                                       style: const TextStyle(
-                                          fontSize: 12, color: Colors.black),
+                                          fontSize: 10, color: Colors.black),
                                     ),
                                   ),
                                 )
@@ -104,9 +104,9 @@ class CardAbsen extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.blue[50],
-                                borderRadius: BorderRadius.circular(10)),
-                            width: MediaQuery.of(context).size.width * 0.42,
-                            height: MediaQuery.of(context).size.height * 0.15,
+                                borderRadius: BorderRadius.circular(5)),
+                            width: MediaQuery.of(context).size.width * 0.40,
+                            height: MediaQuery.of(context).size.height * 0.17,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -119,7 +119,7 @@ class CardAbsen extends StatelessWidget {
                                   state.userProfile.jamKeluar,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                      fontSize: 20,
                                       color: Colors.black),
                                 ),
                                 const SizedBox(height: 2),
@@ -128,11 +128,11 @@ class CardAbsen extends StatelessWidget {
                                       color: Colors.blue[200],
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       status2,
                                       style: const TextStyle(
-                                          fontSize: 12, color: Colors.black),
+                                          fontSize: 10, color: Colors.black),
                                     ),
                                   ),
                                 )

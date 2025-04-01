@@ -15,3 +15,5 @@ class LoginFailure extends LoginState {
 
   LoginFailure({required this.error});
 }
+
+class GlobalUnauthorized extends LoginState {}

@@ -25,7 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await storage.write(key: 'token', value: data['token']);
         emit(LoginSucces(token: data['token']));
         // ignore: avoid_print
-        print(storage);
+        print(storage.read(key: 'token'));
       } else {
         emit(LoginFailure(error: 'Username atau Password Salah'));
       }
