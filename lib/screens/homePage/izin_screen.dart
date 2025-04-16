@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_present/screens/homePage/tambah_izin.dart';
 
 class IzinScreen extends StatelessWidget {
   const IzinScreen({super.key});
@@ -18,7 +19,10 @@ class IzinScreen extends StatelessWidget {
         child: Text("Izin Pegawai"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => TambahIzin()));
+        },
         child: Icon(
           Icons.add,
           color: Theme.of(context).colorScheme.onSurface,
